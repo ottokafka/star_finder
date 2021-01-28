@@ -7,12 +7,13 @@ import speakerImg from './assets/speaker.png';
 // import theWeekend from './assets/theWeekend.mp3';
 import shipImg from './assets/ship.png';
 import beamShot1 from './assets/beamShot1.png';
+import badGuy1 from './assets/badGuy1.png'
 import Shoot from './shoot.js'
 
 var shipWorld = {
     velocity: 8
 };
-var bullet = {
+var enemyMovement = {
     velocity: 2
 };
 class MyGame extends Phaser.Scene {
@@ -29,6 +30,7 @@ class MyGame extends Phaser.Scene {
         // Add key input to the game
         this.keys = this.input.keyboard.createCursorKeys();
         this.load.image('shoot', beamShot1);
+        this.load.image('badGuy1', badGuy1);
     }
 
     create() {
@@ -49,7 +51,9 @@ class MyGame extends Phaser.Scene {
             // this.physics.add.image(400, 300, 'ship').setScale(0.1);
         });
 
-        this.ship = this.add.image(100, 400, 'ship').setScale(0.6);
+        this.ship = this.add.image(50, 500, 'ship').setScale(0.6);
+        // this.add.image(100, 100, 'badGuy1').setScale(0.6);
+        var badGuy1 = this.add.image(100, 100, 'badGuy1');
 
         // shoot 
         this.shootsGroup = this.physics.add.group({
@@ -58,9 +62,27 @@ class MyGame extends Phaser.Scene {
             runChildUpdate: true,
         });
 
-        // this.physics.add.overlap(this.shootsGroup, this.asteroidsGroup, this.collision, null, this);
+        this.physics.add.overlap(this.shootsGroup, this.asteroidsGroup, this.collision, null, this);
+
+        // enemy
+        this.tweens.add({
+            targets: badGuy1,
+            y: 500,
+            ease: 'Power1',
+            duration: 3000,
+            yoyo: true,
+            repeat: 100,
+            // onStart: function () { console.log('onStart'); },
+            // onComplete: function () { console.log('onComplete'); },
+            // onYoyo: function () { console.log('onYoyo'); },
+            // onRepeat: function () { console.log('onRepeat'); },
+        });
+
     }
+
+
     update() {
+
         // Poll the arrow keys to move the ship
         if (this.keys.left.isDown) {
             this.ship.x -= shipWorld.velocity;
@@ -82,8 +104,6 @@ class MyGame extends Phaser.Scene {
             }
         }
     }
-
-
 }
 
 
