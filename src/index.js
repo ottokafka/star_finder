@@ -25,7 +25,6 @@ class MyGame extends Phaser.Scene {
         this.load.image('spaceBG', spaceImgBG);
 
         this.load.image('ship', shipImg);
-        // this.load.image('beamShot1', beamShot1);
 
         // Add key input to the game
         this.keys = this.input.keyboard.createCursorKeys();
@@ -47,13 +46,14 @@ class MyGame extends Phaser.Scene {
             fontStyle: 'bold',
         }).setInteractive({ useHandCursor: true }).on('pointerdown', () => {
 
-            this.add.image(100, 400, 'ship').setScale(0.6);
+            this.physics.add.image(100, 400, 'ship').setScale(0.6);
             // this.physics.add.image(400, 300, 'ship').setScale(0.1);
         });
 
-        this.ship = this.add.image(50, 500, 'ship').setScale(0.6);
+        this.ship = this.physics.add.sprite(50, 500, 'ship').setScale(0.6);
         // this.add.image(100, 100, 'badGuy1').setScale(0.6);
-        var badGuy1 = this.add.image(100, 100, 'badGuy1');
+        this.badGuy1 = this.physics.add.sprite(300, 100, 'badGuy1');
+
 
         // shoot 
         this.shootsGroup = this.physics.add.group({
@@ -62,11 +62,11 @@ class MyGame extends Phaser.Scene {
             runChildUpdate: true,
         });
 
-        this.physics.add.overlap(this.shootsGroup, this.asteroidsGroup, this.collision, null, this);
+        // this.physics.add.overlap(this.shootsGroup, this.badGuy1, this.collision, null, this);
 
         // enemy
         this.tweens.add({
-            targets: badGuy1,
+            targets: this.badGuy1,
             y: 500,
             ease: 'Power1',
             duration: 3000,
@@ -78,6 +78,19 @@ class MyGame extends Phaser.Scene {
             // onRepeat: function () { console.log('onRepeat'); },
         });
 
+        this.physics.add.collider(this.ship, this.badGuy1, function (ship, badGuy1) {
+            if (!this.isGameOver) {
+                ship.destroy();
+                this.isGameOver = true;
+            }
+        });
+
+        this.physics.add.collider(this.shootsGroup, this.badGuy1, function (ship, badGuy1) {
+            if (!this.isGameOver) {
+                ship.destroy();
+                this.isGameOver = true;
+            }
+        });
     }
 
 
@@ -125,13 +138,3 @@ const config = {
 };
 
 const game = new Phaser.Game(config);
-
-// const config = {
-//     type: Phaser.AUTO,
-//     parent: 'phaser-example',
-//     width: 800,
-//     height: 600,
-//     scene: MyGame
-// };
-
-// const game = new Phaser.Game(config);
