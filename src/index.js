@@ -5,14 +5,20 @@ import spaceImgBG from './assets/space_bg.jpeg';
 
 import speakerImg from './assets/speaker.png';
 // import theWeekend from './assets/theWeekend.mp3';
-// Images
+// sound
+import laser from './assets/laser.mp3';
+import enemyHit from './assets/hit.mp3';
+import enemyDead from './assets/smashing.mp3';
+// Player
 import shipImg from './assets/ship.png';
 import beamShot1 from './assets/beamShot1.png';
-import enemyBeam from './assets/enemyBeam.png'
-//files
-import badGuy1 from './assets/badGuy1.png'
 import Shoot from './shoot.js'
+import playerHit from './assets/playerHit.mp3';
+import playerDead from './assets/dead.mp3';
+// enemy
+import badGuy1 from './assets/badGuy1.png'
 import EnemyShoot from './enemyShoot.js'
+import enemyBeam from './assets/enemyBeam.png'
 
 var shipWorld = {
     velocity: 8
@@ -26,6 +32,13 @@ class MyGame extends Phaser.Scene {
     }
 
     preload() {
+        // Audio
+        this.load.audio('laser', laser);
+        this.load.audio('enemyHit', enemyHit);
+        this.load.audio('enemyDead', enemyDead);
+        this.load.audio('playerHit', playerHit);
+        this.load.audio('playerDead', playerDead);
+
         // Add key input to the game
         this.keys = this.input.keyboard.createCursorKeys();
         this.load.image('spaceBG', spaceImgBG);
@@ -100,20 +113,30 @@ class MyGame extends Phaser.Scene {
         });
 
         // ship beam collide with enemy
+        var enemyHit = this.sound.add('enemyHit');
+        var enemyDead = this.sound.add('enemyDead');
         this.physics.add.collider(this.shootsGroup, this.badGuy1, function (ship, badGuy1) {
+            enemyHit.play();
             if (!this.isGameOver) {
+                enemyDead.play();
                 ship.destroy();
                 this.isGameOver = true;
             }
         });
 
         // enemy beam collide with ship 
+        var playerHit = this.sound.add('playerHit');
+        var playerDead = this.sound.add('playerDead');
         this.physics.add.collider(this.enemyShootsGroup, this.ship, function (ship, badGuy1) {
+            playerHit.play();
             if (!this.isGameOver) {
+                playerDead.play();
                 ship.destroy();
                 this.isGameOver = true;
             }
         });
+
+
     }
 
 
@@ -139,8 +162,10 @@ class MyGame extends Phaser.Scene {
 
         if (this.keys.space.isDown) {
             const shoot = this.shootsGroup.get();
+            var beamSound = this.sound.add('laser');
             if (shoot) {
                 shoot.fire(this.ship.x, this.ship.y, this.ship.rotation);
+                beamSound.play();
             }
         }
     }
