@@ -5,10 +5,14 @@ import spaceImgBG from './assets/space_bg.jpeg';
 
 import speakerImg from './assets/speaker.png';
 // import theWeekend from './assets/theWeekend.mp3';
+// Images
 import shipImg from './assets/ship.png';
 import beamShot1 from './assets/beamShot1.png';
+import enemyBeam from './assets/enemyBeam.png'
+//files
 import badGuy1 from './assets/badGuy1.png'
 import Shoot from './shoot.js'
+import EnemyShoot from './enemyShoot.js'
 
 var shipWorld = {
     velocity: 8
@@ -22,13 +26,15 @@ class MyGame extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('spaceBG', spaceImgBG);
-
-        this.load.image('ship', shipImg);
-
         // Add key input to the game
         this.keys = this.input.keyboard.createCursorKeys();
+        this.load.image('spaceBG', spaceImgBG);
+
+        // Player
+        this.load.image('ship', shipImg);
         this.load.image('shoot', beamShot1);
+        // Enemy
+        this.load.image('enemyShoot', enemyBeam);
         this.load.image('badGuy1', badGuy1);
     }
 
@@ -62,6 +68,13 @@ class MyGame extends Phaser.Scene {
             runChildUpdate: true,
         });
 
+        // enemy shoot 
+        this.enemyShootsGroup = this.physics.add.group({
+            classType: EnemyShoot,
+            maxSize: 1,
+            runChildUpdate: true,
+        });
+
         // this.physics.add.overlap(this.shootsGroup, this.badGuy1, this.collision, null, this);
 
         // enemy
@@ -78,6 +91,7 @@ class MyGame extends Phaser.Scene {
             // onRepeat: function () { console.log('onRepeat'); },
         });
 
+        // ship collide with enemy
         this.physics.add.collider(this.ship, this.badGuy1, function (ship, badGuy1) {
             if (!this.isGameOver) {
                 ship.destroy();
@@ -85,7 +99,16 @@ class MyGame extends Phaser.Scene {
             }
         });
 
+        // ship beam collide with enemy
         this.physics.add.collider(this.shootsGroup, this.badGuy1, function (ship, badGuy1) {
+            if (!this.isGameOver) {
+                ship.destroy();
+                this.isGameOver = true;
+            }
+        });
+
+        // enemy beam collide with ship 
+        this.physics.add.collider(this.enemyShootsGroup, this.ship, function (ship, badGuy1) {
             if (!this.isGameOver) {
                 ship.destroy();
                 this.isGameOver = true;
@@ -95,6 +118,10 @@ class MyGame extends Phaser.Scene {
 
 
     update() {
+        const enemyShoot = this.enemyShootsGroup.get();
+        if (enemyShoot) {
+            enemyShoot.fire(this.badGuy1.x, this.badGuy1.y, this.badGuy1.rotation);
+        }
 
         // Poll the arrow keys to move the ship
         if (this.keys.left.isDown) {
