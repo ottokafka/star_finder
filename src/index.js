@@ -10,7 +10,9 @@ import laser from './assets/laser.mp3';
 import enemyHit from './assets/hit.mp3';
 import enemyDead from './assets/smashing.mp3';
 // Player
-import shipImg from './assets/ship.png';
+import shipImg from './assets/ship1.png';
+import shipSpriteSheet from './assets/ship.png';
+import shipJson from './assets/ship.json';
 import beamShot1 from './assets/beamShot1.png';
 import Shoot from './shoot.js'
 import playerHit from './assets/playerHit.mp3';
@@ -26,6 +28,7 @@ var shipWorld = {
 var enemyMovement = {
     velocity: 2
 };
+var timedEvent;
 class MyGame extends Phaser.Scene {
     constructor() {
         super();
@@ -43,9 +46,11 @@ class MyGame extends Phaser.Scene {
         this.keys = this.input.keyboard.createCursorKeys();
         this.load.image('spaceBG', spaceImgBG);
 
-        // Player
-        this.load.image('ship', shipImg);
+        // ------- Player ----------
+        // this.load.image('ship', shipImg);
         this.load.image('shoot', beamShot1);
+        this.load.atlas("ship", shipSpriteSheet, shipJson);
+
         // Enemy
         this.load.image('enemyShoot', enemyBeam);
         this.load.image('badGuy1', badGuy1);
@@ -69,10 +74,26 @@ class MyGame extends Phaser.Scene {
             // this.physics.add.image(400, 300, 'ship').setScale(0.1);
         });
 
-        this.ship = this.physics.add.sprite(50, 500, 'ship').setScale(0.6);
-        // this.add.image(100, 100, 'badGuy1').setScale(0.6);
         this.badGuy1 = this.physics.add.sprite(300, 100, 'badGuy1');
 
+        // ------- Player ----------
+        // this.ship = this.physics.add.sprite(50, 500, 'ship')
+
+        //// SHIP ANIMATION
+        this.anims.create({
+            key: "fly",
+            frameRate: 7,
+            frames: this.anims.generateFrameNames('ship', {
+                prefix: "ship",
+                suffix: ".png",
+                start: 1,
+                end: 3,
+                zeroPad: 1
+            }),
+            repeat: -1
+        });
+        this.ship = this.add.sprite(50, 400, "ship");
+        this.ship.play("fly");
 
         // shoot 
         this.shootsGroup = this.physics.add.group({
@@ -125,15 +146,33 @@ class MyGame extends Phaser.Scene {
         });
 
         // enemy beam collide with ship 
+        var health = 20
         var playerHit = this.sound.add('playerHit');
         var playerDead = this.sound.add('playerDead');
         this.physics.add.collider(this.enemyShootsGroup, this.ship, function (ship, badGuy1) {
             playerHit.play();
-            if (!this.isGameOver) {
-                playerDead.play();
-                ship.destroy();
-                this.isGameOver = true;
-            }
+            health = health - 1
+            console.log(health);
+
+            // timedEvent = this.time.delayedCall(3000, badGuy1, [], this);
+            // timedEvent = this.time.addEvent({ delay: 2000, callback: onEvent, callbackScope: this });
+            // var timer = ship.time.delayedCall(delay, callback, args, scope);  // delay in ms
+
+            // ship.once(Phaser.Animations.Events.SPRITE_ANIMATION_COMPLETE, () => {
+            //     console.log("remove a health point")
+            // });
+
+            // if (health === 0) {
+            //     playerDead.play();
+            //     ship.destroy();
+            //     this.isGameOver = true;
+            // }
+
+            // if (!this.isGameOver) {
+            //     playerDead.play();
+            //     ship.destroy();
+            //     this.isGameOver = true;
+            // }
         });
 
 
