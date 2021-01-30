@@ -1,0 +1,83 @@
+{
+	"textures": [
+		{
+			"image": "enemy1.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 300,
+				"h": 90
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "enemy1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 100,
+						"h": 90
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 100,
+						"h": 90
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 100,
+						"h": 90
+					}
+				},
+				{
+					"filename": "enemy2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 100,
+						"h": 90
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 100,
+						"h": 90
+					},
+					"frame": {
+						"x": 100,
+						"y": 0,
+						"w": 100,
+						"h": 90
+					}
+				},
+				{
+					"filename": "enemy3.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 100,
+						"h": 90
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 100,
+						"h": 90
+					},
+					"frame": {
+						"x": 200,
+						"y": 0,
+						"w": 100,
+						"h": 90
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:09b8176bd8db3ce07087d180a118369c:6de05d2b4a5bd90436b17b18b60dbb1d:25b65a864ad92a9a51374ffe59991978$"
+	}
+}
