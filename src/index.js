@@ -12,10 +12,14 @@ import enemyDead from './assets/smashing.mp3';
 // Player
 import shipSpriteSheet from './assets/ship.png';
 import shipJson from './assets/ship.json';
+import shipShieldsSpriteSheet from './assets/shipShields.png';
+import shipShieldsJson from './assets/shipShields.json';
 import beamShot1 from './assets/beamShot1.png';
 import Shoot from './shoot.js'
 import playerHit from './assets/playerHit.mp3';
 import playerDead from './assets/dead.mp3';
+import heart from './assets/health/heart.png';
+import shieldsLogo from './assets/health/shields.png';
 // enemy
 import enemySpriteSheet from './assets/enemy.png';
 import enemyJson from './assets/enemy1.json';
@@ -26,10 +30,9 @@ import enemyBeam from './assets/enemyBeam.png'
 var shipWorld = {
     velocity: 8
 };
-var enemyMovement = {
-    velocity: 2
-};
-var timedEvent;
+
+var health = 100
+var shields = 100
 class MyGame extends Phaser.Scene {
     constructor() {
         super();
@@ -51,6 +54,9 @@ class MyGame extends Phaser.Scene {
         // this.load.image('ship', shipImg);
         this.load.image('shoot', beamShot1);
         this.load.atlas("ship", shipSpriteSheet, shipJson);
+        this.load.atlas("shipShields", shipShieldsSpriteSheet, shipShieldsJson);
+        this.load.image('shieldsLogo', shieldsLogo);
+        this.load.image('heart', heart);
 
         // Enemy
         this.load.atlas("enemy", enemySpriteSheet, enemyJson);
@@ -60,6 +66,25 @@ class MyGame extends Phaser.Scene {
 
     create() {
         this.add.image(0, 0, 'spaceBG').setOrigin(0, 0).setScale(1);
+
+        // heart data
+        const heart = this.add.image(20, 20, 'heart');
+        const heartPercent = this.add.text(30, 11, '', { font: '16px Courier', fill: '#00ff00' });
+        heart.setDataEnabled();
+        heart.data.set('heartAmount', health);
+        heartPercent.setText([
+            '' + heart.data.get('heartAmount'),
+        ]);
+        
+        const shieldBanner = this.add.image(80, 20, 'shieldsLogo');
+        const shieldsPercent = this.add.text(90, 10, '', { font: '16px Courier', fill: '#00ff00' });
+        //  Store some data about this shield:
+        shieldBanner.setDataEnabled();
+        shieldBanner.data.set('shieldAmount', shields);
+        shieldsPercent.setText([
+            'Shields: ' + shieldBanner.data.get('shieldAmount'),
+        ]);
+
 
         this.add.text(280, 350, `Start Finder`, {
             fontSize: '32px',
@@ -96,6 +121,20 @@ class MyGame extends Phaser.Scene {
         });
         this.ship = this.physics.add.sprite(50, 200, "ship");
         this.ship.play("fly");
+
+        // Shields
+        this.anims.create({
+            key: "shields",
+            frameRate: 8,
+            frames: this.anims.generateFrameNames('shipShields', {
+                prefix: "shields",
+                suffix: ".png",
+                start: 1,
+                end: 12,
+                zeroPad: 1
+            }),
+            repeat: 1
+        });
 
         // --- Enemy Animation -----
         this.anims.create({
@@ -164,29 +203,38 @@ class MyGame extends Phaser.Scene {
         });
 
         // enemy beam collide with ship 
-        var health = 20
         var playerHit = this.sound.add('playerHit');
         var playerDead = this.sound.add('playerDead');
         this.physics.add.collider(this.ship, this.enemyShootsGroup, function (ship, enemy) {
             playerHit.play();
-            health = health - 1
-            console.log(health);
+            ship.play("shields");
+            ship.on('animationcomplete', () => {
+                ship.play("fly");
+            });
 
-            // timedEvent = this.time.delayedCall(3000, badGuy1, [], this);
-            // timedEvent = this.time.addEvent({ delay: 2000, callback: onEvent, callbackScope: this });
-            // var timer = ship.time.delayedCall(delay, callback, args, scope);  // delay in ms
+            // Deduct shield Damage 
+            shieldBanner.on('changedata-shieldAmount', function (gameObject, value) {
+                shieldsPercent.setText([
+                    'Shields: ' + shieldBanner.data.get('shieldAmount'),
+                ]);
+            });
+            shields = shields - 1
+            shieldBanner.data.values.shieldAmount = shields;
 
-            // ship.once(Phaser.Animations.Events.SPRITE_ANIMATION_COMPLETE, () => {
-            //     console.log("remove a health point")
-            // });
-
-            if (health === 0) {
-                playerDead.play();
-                ship.destroy();
-                this.isGameOver = true;
+            if (shields <= 0) {
+                shieldBanner.data.values.shieldAmount = 0;
+              
+                heart.on('changedata-heartAmount', function (gameObject, value) {
+                    heartPercent.setText([
+                        ' ' + heart.data.get('heartAmount'),
+                    ]);
+                });
+                health = health - 1
+                heart.data.values.heartAmount = health;
             }
 
-            if (!this.isGameOver) {
+            if (health <= 0) {
+                heart.data.values.heartAmount = 0;
                 playerDead.play();
                 ship.destroy();
                 this.isGameOver = true;
@@ -194,6 +242,9 @@ class MyGame extends Phaser.Scene {
         });
     }
 
+    onEvent() {
+        this.ship.rotation += 0.04;
+    }
 
     update() {
         const enemyShoot = this.enemyShootsGroup.get();

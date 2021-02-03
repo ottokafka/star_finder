@@ -1,0 +1,272 @@
+{
+	"textures": [
+		{
+			"image": "shipShields.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 1272,
+				"h": 93
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "shields1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 106,
+						"h": 93
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 106,
+						"h": 93
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 106,
+						"h": 93
+					}
+				},
+				{
+					"filename": "shields2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 106,
+						"h": 93
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 106,
+						"h": 93
+					},
+					"frame": {
+						"x": 106,
+						"y": 0,
+						"w": 106,
+						"h": 93
+					}
+				},
+				{
+					"filename": "shields3.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 106,
+						"h": 93
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 106,
+						"h": 93
+					},
+					"frame": {
+						"x": 212,
+						"y": 0,
+						"w": 106,
+						"h": 93
+					}
+				},
+				{
+					"filename": "shields4.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 106,
+						"h": 93
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 106,
+						"h": 93
+					},
+					"frame": {
+						"x": 318,
+						"y": 0,
+						"w": 106,
+						"h": 93
+					}
+				},
+				{
+					"filename": "shields5.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 106,
+						"h": 93
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 106,
+						"h": 93
+					},
+					"frame": {
+						"x": 424,
+						"y": 0,
+						"w": 106,
+						"h": 93
+					}
+				},
+				{
+					"filename": "shields6.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 106,
+						"h": 93
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 106,
+						"h": 93
+					},
+					"frame": {
+						"x": 530,
+						"y": 0,
+						"w": 106,
+						"h": 93
+					}
+				},
+				{
+					"filename": "shields7.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 106,
+						"h": 93
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 106,
+						"h": 93
+					},
+					"frame": {
+						"x": 636,
+						"y": 0,
+						"w": 106,
+						"h": 93
+					}
+				},
+				{
+					"filename": "shields8.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 106,
+						"h": 93
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 106,
+						"h": 93
+					},
+					"frame": {
+						"x": 742,
+						"y": 0,
+						"w": 106,
+						"h": 93
+					}
+				},
+				{
+					"filename": "shields9.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 106,
+						"h": 93
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 106,
+						"h": 93
+					},
+					"frame": {
+						"x": 848,
+						"y": 0,
+						"w": 106,
+						"h": 93
+					}
+				},
+				{
+					"filename": "shields10.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 106,
+						"h": 93
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 106,
+						"h": 93
+					},
+					"frame": {
+						"x": 954,
+						"y": 0,
+						"w": 106,
+						"h": 93
+					}
+				},
+				{
+					"filename": "shields11.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 106,
+						"h": 93
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 106,
+						"h": 93
+					},
+					"frame": {
+						"x": 1060,
+						"y": 0,
+						"w": 106,
+						"h": 93
+					}
+				},
+				{
+					"filename": "shields12.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 106,
+						"h": 93
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 106,
+						"h": 93
+					},
+					"frame": {
+						"x": 1166,
+						"y": 0,
+						"w": 106,
+						"h": 93
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:c5c8e716ec1b83399830c7c9c46403e2:7f7c1689f41c0b9aba160c265a27c684:8109342990ef02482fcac3ccd7bb9830$"
+	}
+}

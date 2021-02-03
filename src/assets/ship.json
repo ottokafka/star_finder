@@ -10,27 +10,6 @@
 			"scale": 1,
 			"frames": [
 				{
-					"filename": "ship0.png",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 95,
-						"h": 90
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 95,
-						"h": 90
-					},
-					"frame": {
-						"x": 0,
-						"y": 0,
-						"w": 95,
-						"h": 90
-					}
-				},
-				{
 					"filename": "ship1.png",
 					"rotated": false,
 					"trimmed": false,
@@ -45,7 +24,7 @@
 						"h": 90
 					},
 					"frame": {
-						"x": 95,
+						"x": 0,
 						"y": 0,
 						"w": 95,
 						"h": 90
@@ -66,7 +45,7 @@
 						"h": 90
 					},
 					"frame": {
-						"x": 190,
+						"x": 95,
 						"y": 0,
 						"w": 95,
 						"h": 90
@@ -74,6 +53,27 @@
 				},
 				{
 					"filename": "ship3.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 95,
+						"h": 90
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 95,
+						"h": 90
+					},
+					"frame": {
+						"x": 190,
+						"y": 0,
+						"w": 95,
+						"h": 90
+					}
+				},
+				{
+					"filename": "ship4.png",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -99,6 +99,6 @@
 	"meta": {
 		"app": "https://www.codeandweb.com/texturepacker",
 		"version": "3.0",
-		"smartupdate": "$TexturePacker:SmartUpdate:431b2f1e3dcb044f8c79953360c99f3a:bcfdeb1ac3bd10f995abb56706b414e4:25d6acd8d4906c9ff490804d476da0a8$"
+		"smartupdate": "$TexturePacker:SmartUpdate:b920ea06262e2568bcd2bd6237ab67aa:bcfdeb1ac3bd10f995abb56706b414e4:25d6acd8d4906c9ff490804d476da0a8$"
 	}
 }
