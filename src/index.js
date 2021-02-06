@@ -35,7 +35,7 @@ var health = 10
 var shields = 1
 //enemy
 var enemyHealth = 20
-
+var isGameOver = false
 var enemyDestroyed = false;
 class MyGame extends Phaser.Scene {
     constructor() {
@@ -238,7 +238,7 @@ class MyGame extends Phaser.Scene {
                 heart.data.values.heartAmount = 0;
                 playerDead.play();
                 ship.destroy();
-                this.isGameOver = true;
+                isGameOver = true;
             }
         });
     }
@@ -274,8 +274,11 @@ class MyGame extends Phaser.Scene {
             const shoot = this.shootsGroup.get();
             var beamSound = this.sound.add('laser');
             if (shoot) {
-                shoot.fire(this.ship.x, this.ship.y, this.ship.rotation);
-                beamSound.play();
+                if (isGameOver != true) {
+                    shoot.fire(this.ship.x, this.ship.y, this.ship.rotation);
+                    beamSound.play();
+                }
+              
             }
         }
     }
