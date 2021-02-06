@@ -31,12 +31,12 @@ var shipWorld = {
     velocity: 8
 };
 // player
-var health = 100
-var shields = 100
+var health = 10
+var shields = 1
 //enemy
 var enemyHealth = 20
 
-
+var enemyDestroyed = false;
 class MyGame extends Phaser.Scene {
     constructor() {
         super();
@@ -105,11 +105,6 @@ class MyGame extends Phaser.Scene {
             // this.physics.add.image(400, 300, 'ship').setScale(0.1);
         });
 
-        // this.badGuy1 = this.physics.add.sprite(300, 100, 'badGuy1');
-
-        // ------- Player ----------
-        // this.ship = this.physics.add.sprite(50, 200, 'ship')
-
         //// SHIP ANIMATION
         this.anims.create({
             key: "fly",
@@ -169,7 +164,7 @@ class MyGame extends Phaser.Scene {
             maxSize: 1,
             runChildUpdate: true,
         });
-
+        // this.enemyShoot = this.physics.add.sprite("enemyShoot");
         // this.physics.add.overlap(this.shootsGroup, this.badGuy1, this.collision, null, this);
 
         // enemy
@@ -204,13 +199,14 @@ class MyGame extends Phaser.Scene {
             if (enemyHealth <= 0) {
                 enemyDead.play();
                 enemy.destroy();
+                enemyDestroyed = true
             }
         });
 
         // enemy beam collide with ship 
         var playerHit = this.sound.add('playerHit');
         var playerDead = this.sound.add('playerDead');
-        this.physics.add.collider(this.ship, this.enemyShootsGroup, function (ship, enemy) {
+        this.physics.add.collider(this.ship, this.enemyShootsGroup, function (ship, enemyShootsGroup) {
             playerHit.play();
             ship.play("shields");
             ship.on('animationcomplete', () => {
@@ -251,10 +247,13 @@ class MyGame extends Phaser.Scene {
         this.ship.rotation += 0.04;
     }
 
+
     update() {
         var enemyShoot = this.enemyShootsGroup.get();
         if (enemyShoot) {
-            enemyShoot.fire(this.enemy.x, this.enemy.y, this.enemy.rotation);
+            if (enemyDestroyed == false) {
+                enemyShoot.fire(this.enemy.x, this.enemy.y, this.enemy.rotation);
+            }
         }
 
         // Poll the arrow keys to move the ship
