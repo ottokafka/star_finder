@@ -30,9 +30,13 @@ import enemyBeam from './assets/enemyBeam.png'
 var shipWorld = {
     velocity: 8
 };
-
+// player
 var health = 100
 var shields = 100
+//enemy
+var enemyHealth = 20
+
+
 class MyGame extends Phaser.Scene {
     constructor() {
         super();
@@ -193,12 +197,13 @@ class MyGame extends Phaser.Scene {
         // ship beam collide with enemy
         var enemyHit = this.sound.add('enemyHit');
         var enemyDead = this.sound.add('enemyDead');
-        this.physics.add.collider(this.shootsGroup, this.enemy, function (ship, enemy) {
+        this.physics.add.collider(this.enemy, this.shootsGroup, function (enemy) {
             enemyHit.play();
-            if (!this.isGameOver) {
+            enemyHealth = enemyHealth - 1
+            console.log(enemyHealth);
+            if (enemyHealth <= 0) {
                 enemyDead.play();
-                ship.destroy();
-                this.isGameOver = true;
+                enemy.destroy();
             }
         });
 
@@ -247,7 +252,7 @@ class MyGame extends Phaser.Scene {
     }
 
     update() {
-        const enemyShoot = this.enemyShootsGroup.get();
+        var enemyShoot = this.enemyShootsGroup.get();
         if (enemyShoot) {
             enemyShoot.fire(this.enemy.x, this.enemy.y, this.enemy.rotation);
         }
